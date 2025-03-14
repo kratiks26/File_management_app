@@ -1,0 +1,20 @@
+.context-menu-container {
+  position: relative;
+  margin-right: 20px;
+  display: flex;
+  gap: 10px;
+
+  .context-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    background: rgba(45, 51, 107, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .is-active {
+    background: rgba(45, 51, 107, 1);
+  }
+}

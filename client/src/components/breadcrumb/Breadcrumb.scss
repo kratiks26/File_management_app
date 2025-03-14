@@ -1,0 +1,19 @@
+.breadcrumb-bar {
+  max-width: 500px;
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  .breadcrumb-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    .breadcrumb {
+      font-weight: 600;
+      font-size: 15px;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.LeftStaticBar-container {
+  width: 80px;
+  height: 832px;
+  background-color: rgba(45, 51, 107, 1);
+  position: absolute;
+  .top-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 13px;
+    left: 15px;
+    border-radius: 10px;
+    background: rgba(169, 181, 223, 1);
+  }
+  .options-container {
+    position: absolute;
+    top: 107px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .option {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(169, 181, 223, 0.2);
+    }
+  }
+  .user-icon {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    top: 757px;
+    left: 15px;
+    border-radius: 100px;
+    background: rgba(169, 181, 223, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

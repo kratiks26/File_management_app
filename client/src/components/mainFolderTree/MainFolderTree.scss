@@ -1,0 +1,140 @@
+.folder-tree {
+  .tree-node-base {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 1);
+
+    .tree-node {
+      margin-bottom: 10px;
+      border-radius: 10px;
+      height: 61px;
+      padding-inline: 60px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      justify-content: space-evenly;
+      border-bottom: 1px solid rgba(221, 221, 221, 1);
+      background: rgba(255, 255, 255, 1);
+      margin-bottom: 5px;
+      position: relative;
+      cursor: pointer;
+
+      .open-folder-arrow {
+        position: absolute;
+        left: 15px;
+        top: 20px;
+      }
+      .folder-count {
+        position: absolute;
+        top: 8px;
+        left: 28px;
+        font-size: 12px;
+        padding-inline: 5px;
+        border-radius: 50px;
+        background: rgba(255, 217, 95, 1);
+      }
+      .node-folder-icon {
+        position: absolute;
+        left: 30px;
+        top: 12px;
+      }
+      .node-file-icon {
+        position: absolute;
+        left: 30px;
+        top: 20px;
+      }
+      .node-name {
+        max-width: 150px;
+        font-weight: 500;
+        font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .node-description {
+        width: 250px;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .node-created-at {
+        width: 150px;
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+      .node-updated-at {
+        width: 150px;
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+      .node-options-icon {
+        width: 50px;
+        height: 30px;
+        position: absolute;
+        padding-inline: 5px;
+        right: 0px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .tree-node-open {
+      background: rgba(169, 181, 223, 0.3);
+    }
+  }
+}
+@media (max-width: 1080px) {
+  .folder-tree {
+    .tree-node-base {
+      .tree-node {
+        .node-name {
+          max-width: 120px;
+
+          text-overflow: ellipsis;
+        }
+        .node-description {
+          width: 150px;
+        }
+        .node-created-at {
+          width: 90px;
+        }
+        .node-updated-at {
+          width: 90px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .folder-tree {
+    .tree-node-base {
+      .tree-node {
+        .node-name {
+          max-width: 50px;
+
+          text-overflow: ellipsis;
+        }
+        .node-description {
+          width: 100px;
+        }
+        .node-created-at {
+          width: 60px;
+        }
+        .node-updated-at {
+          width: 60px;
+        }
+      }
+    }
+  }
+}

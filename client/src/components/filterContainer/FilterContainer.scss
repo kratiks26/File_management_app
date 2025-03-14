@@ -1,0 +1,115 @@
+.filter-container {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  top: 40px;
+  right: 35px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  z-index: 2;
+  .filted-header {
+    height: 50px;
+    border-bottom: 2px solid rgba(221, 221, 221, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 280px;
+    .filter-container-title {
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 100%;
+      letter-spacing: 0%;
+    }
+    .filter-right-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+
+      .clear-button {
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: underline;
+        text-decoration-style: solid;
+        text-decoration-thickness: 2px;
+        color: rgba(246, 98, 100, 1);
+        cursor: pointer;
+      }
+      .close-button {
+        cursor: pointer;
+      }
+    }
+  }
+  .filter-item-container {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    .filter-item {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      flex-direction: column;
+      gap: 10px;
+      .filter-lable {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+      .input-box {
+        width: 371px;
+        height: 40px;
+        border-radius: 10px;
+        border-width: 1px;
+        border: 1px solid rgba(221, 221, 221, 1);
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        padding-inline: 15px;
+        cursor: pointer;
+      }
+    }
+  }
+  .filter-footer {
+    margin-top: 15px;
+    border-top: 2px solid rgba(221, 221, 221, 1);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+    .action-button {
+      margin: 10px 10px 0 0;
+      width: 117px;
+      height: 44.14691925048828px;
+      font-family: Inter;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 100%;
+      letter-spacing: 0%;
+
+      border-radius: 10px;
+      border-width: 1px;
+      border: 1px solid rgba(221, 221, 221, 1);
+      background: none;
+      &:hover {
+        background: rgba(45, 51, 107, 1);
+        color: white;
+        font-weight: 600;
+      }
+    }
+  }
+}
+.filter-open {
+  width: 440px;
+  height: 395px;
+}

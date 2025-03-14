@@ -1,0 +1,126 @@
+.leftFolderTree-main-container {
+  margin-left: 80px;
+  height: 832px;
+  width: 0px;
+  left: 80px;
+  transition: width 0.5s ease;
+  .toggle-button {
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    top: 23px;
+    left: 70px;
+    border-radius: 100px;
+    background: rgba(243, 245, 250, 1);
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.5s ease;
+    z-index: 1;
+    .chevron-icon {
+      transform: rotate(-180deg);
+      transition: transform 0.5s ease;
+    }
+  }
+  .leftFolderTree-container {
+    height: 832px;
+    width: 1px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.1);
+    transition: width 0.5s ease;
+    overflow: hidden;
+    .folders-and-documents {
+      border-bottom: 1px solid rgba(221, 221, 221, 1);
+      padding: 30px 0 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .title {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: rgba(0, 0, 0, 1);
+      }
+      .data-container {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        gap: 20px;
+        .number-of-fld-doc {
+          width: 74px;
+          height: 92px;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          justify-content: center;
+          position: relative;
+          .icon {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+          }
+          .box-title {
+            position: absolute;
+            top: 45px;
+            font-weight: 400;
+            font-size: 12px;
+          }
+          .dynamic-count {
+            position: absolute;
+            top: 55px;
+            font-weight: 600;
+            font-size: 20px;
+          }
+        }
+        .line {
+          height: 66.0302963256836px;
+          border-width: 1px;
+          border: 1px solid rgba(221, 221, 221, 1);
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .folder-tree {
+      height: 630px;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: white;
+        width: 20px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(169, 181, 223, 0.4);
+        border-radius: 4px;
+        &:hover {
+          background: rgb(169, 181, 223);
+        }
+      }
+    }
+  }
+
+  .bar-open {
+    width: 320px;
+    transition: width 0.5s ease;
+  }
+}
+.toggle-open {
+  width: 320px;
+
+  .toggle-button {
+    left: 387px;
+    transition: left 0.5s ease;
+
+    .chevron-icon {
+      transform: rotate(0deg);
+      transition: transform 0.5s ease-out;
+    }
+  }
+}

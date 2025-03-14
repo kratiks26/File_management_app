@@ -1,0 +1,46 @@
+.folder-tree {
+  .main-folder {
+    margin-left: 15px;
+    .folder-box {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 10px;
+      position: relative;
+      border-right: 1px solid rgba(221, 221, 221, 1);
+      border-bottom: 1px solid rgba(221, 221, 221, 1);
+      .folder-icon {
+        margin-left: 15px;
+        width: 17.95969581604004px;
+        height: 15.241415023803711px;
+      }
+      .folder-title {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+      .folder-open-icon {
+        width: 16.89603042602539px;
+        height: 16.316513061523438px;
+        border-radius: 100px;
+        background: rgba(169, 181, 223, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 10px;
+      }
+      .plus-active {
+        background-color: rgba(255, 217, 95, 1);
+        .plus-icon {
+          fill: white;
+        }
+      }
+    }
+    .folderBoxOpen {
+      background-color: rgba(169, 181, 223, 0.3);
+    }
+  }
+}
