@@ -298,6 +298,7 @@ const FolderOptionsContainer = ({
       <div className="create-lable">Browser document</div>
       <label for="upload-file-container" className="file-upload-button">
         <FileUploadIcon />
+        {toUploadFile && <span>{toUploadFile.name}</span>}
         <input
           id="upload-file-container"
           className="input-box-file"
