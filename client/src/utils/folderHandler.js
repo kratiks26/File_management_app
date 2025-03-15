@@ -1,6 +1,6 @@
 export async function createFolder(name, description, parentFolder = null) {
   try {
-    const response = await fetch("https://file-management-app-rccj.onrender.com/api/folders", {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/folders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export async function createFolder(name, description, parentFolder = null) {
 
 export async function editFolder(id, name, description) {
   try {
-    const response = await fetch(`https://file-management-app-rccj.onrender.com/api/folders/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/folders/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export async function editFolder(id, name, description) {
 
 export async function deleteFolder(id) {
   try {
-    const response = await fetch(`https://file-management-app-rccj.onrender.com/api/folders/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/folders/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {
@@ -75,7 +75,7 @@ export async function getFolders(page = 1, limit = 8, filters = {}) {
       ...(createdAt && { createdAt }),
     });
 
-    const response = await fetch(`https://file-management-app-rccj.onrender.com/api/folders?${queryParams}`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/folders?${queryParams}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch folders");
@@ -91,7 +91,7 @@ export async function getFolders(page = 1, limit = 8, filters = {}) {
 
 export async function countFileAndFolder() {
   try {
-    const response = await fetch("https://file-management-app-rccj.onrender.com/api/folders/count");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/folders/count`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch count");
