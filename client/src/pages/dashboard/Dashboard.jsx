@@ -51,7 +51,6 @@ const Dashboard = () => {
     // eslint-disable-next-line 
   },[])
 
-  console.log(folderData);
   
 
 

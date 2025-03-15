@@ -50,6 +50,35 @@
       display: none;
     }
   }
+
+  .upload-progress-container{
+    .file-name{
+      padding: 20px;
+      display: flex;
+      gap: 10px;
+
+    }
+  .upload-progress {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+    .progress-bar {
+      height: 10px;
+      background: rgba(40, 242, 21, 1);
+      border-radius: 5px;
+      transition: width 0.3s ease;
+    }
+  }
+  .progress-count {
+    display: block;
+    text-align: end;
+    font-size: 12px;
+    margin-top: 15px;
+  }
+}
+
   .node-options {
     font-weight: 600;
     font-size: 13px;
@@ -70,3 +99,11 @@
   height: 134px;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
+
+
+
+
+
+
+
+

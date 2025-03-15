@@ -31,7 +31,6 @@ const ContextMenu = () => {
     setIsCreateFileCollaps(!isCreateFileCollapsed);
   };
 
-  console.log("filtered:", apiData);
 
   return (
     <div className="context-menu-container">

@@ -26,7 +26,7 @@ const LeftFolderTree = () => {
       });
   };
 
-  console.log("Count:", fileFolderCount, folderData);
+
   useEffect(() => {
     handleFileAndFolderCount();
   }, [folderData]);

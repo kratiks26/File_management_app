@@ -14,8 +14,11 @@ import { ModalButtons } from "../createFolder/CreateFolder";
 import FileUploadIcon from "../../icons/fileUploadIcon";
 import { deleteFile, uploadFile } from "../../utils/filesHandler";
 import { getSocket } from "../../utils/socket";
+import FileColoredOption from "../../icons/fileColoredOption";
 
 const FolderOptionsContainer = ({
+  name,
+  description,
   type,
   id,
   isOptionsActive,
@@ -32,8 +35,16 @@ const FolderOptionsContainer = ({
     name: "",
     description: "",
   });
+  const [toEditFolder, setToEditFolder] = useState({
+    name: name,
+    description: description,
+  });
 
   const [toUploadFile, setToUploadFile] = useState(null);
+
+  // console.log("file:", toUploadFile);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadActive, setUploadActive] = useState(false);
 
   const handleEditOption = () => {
     setIsModalOpen((prev) => ({
@@ -67,7 +78,8 @@ const FolderOptionsContainer = ({
           socket.emit("folderDeleted", id);
         })
         .catch((error) => {
-          alert(error);
+          // alert(error);
+          console.error(error);
         });
     } else {
       deleteFile(id)
@@ -77,7 +89,7 @@ const FolderOptionsContainer = ({
           socket.emit("fileDeleted", id);
         })
         .catch((error) => {
-          alert(error);
+          console.error(error);
         });
     }
   };
@@ -89,12 +101,20 @@ const FolderOptionsContainer = ({
       [name]: value,
     }));
   };
+
+  const handleUpdateInput = (event) => {
+    const { name, value } = event.target;
+    setToEditFolder((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
   const handleEditfolder = () => {
-    editFolder(id, toCreateFolder.name, toCreateFolder.description)
+    editFolder(id, toEditFolder.name, toEditFolder.description)
       .then(() => {
         setIsModalOpen({ toCreate: false, toUpload: false, toEdit: false });
         const socket = getSocket();
-        socket.emit("folderUpdated", { id, ...toCreateFolder });
+        socket.emit("folderUpdated", { id, ...toEditFolder });
       })
       .catch((error) => {
         console.error(error);
@@ -124,20 +144,55 @@ const FolderOptionsContainer = ({
 
   const handleUploadfile = () => {
     setActionButtonStatus(true);
-    uploadFile(toUploadFile, id)
+    setUploadActive(true);
+    uploadFile(toUploadFile, id, (progress) => {
+      setUploadProgress(progress);
+    })
       .then((file) => {
         setToUploadFile(null);
         setIsModalOpen({ toCreate: false, toUpload: false, toEdit: false });
         const socket = getSocket();
         socket.emit("fileUploaded", file);
         setActionButtonStatus(false);
+        setUploadProgress(0);
+        setUploadActive(false);
       })
       .catch((error) => {
         setActionButtonStatus(false);
         console.error(error);
-        alert(error)
+        alert(error);
+        setUploadProgress(0);
+        setUploadActive(false);
       });
   };
+
+  console.log("uploadProgress:", uploadProgress);
+  const EditContainer = (
+    <>
+      <div className="create-item">
+        <div className="create-lable">Name</div>
+        <input
+          className="input-box"
+          value={toEditFolder.name}
+          name="name"
+          type="text"
+          placeholder="Folder name"
+          onChange={handleUpdateInput}
+        />
+      </div>
+      <div className="create-item">
+        <div className="create-lable">Description</div>
+        <input
+          className="input-box"
+          value={toEditFolder.description}
+          name="description"
+          type="text"
+          placeholder="Description"
+          onChange={handleUpdateInput}
+        />
+      </div>
+    </>
+  );
 
   const CreateContainer = (
     <>
@@ -166,7 +221,21 @@ const FolderOptionsContainer = ({
     </>
   );
 
-  const UploadContainer = (
+  const UploadContainer = uploadActive ? (
+    < div className="upload-progress-container">
+       <div className="file-name">
+       <FileColoredOption/>
+       {
+        toUploadFile && <span>{toUploadFile.name}</span>
+       }
+       
+      </div>
+      <div className="upload-progress">
+          <div className="progress-bar" style={{ width: `${uploadProgress}%` }}></div>
+          </div>
+          <span className="progress-count">{uploadProgress}%  upload completed</span>
+    </div>
+  ) : (
     <>
       <div className="create-lable">Browser document</div>
       <label for="upload-file-container" className="file-upload-button">
@@ -183,20 +252,20 @@ const FolderOptionsContainer = ({
   const modelOpenProps = isModalOpen.toCreate
     ? true
     : isModalOpen.toUpload
-      ? true
-      : isModalOpen.toEdit;
+    ? true
+    : isModalOpen.toEdit;
 
   const modelTitleProps = isModalOpen.toCreate
     ? "Create Folder"
     : isModalOpen.toUpload
-      ? "Upload Document"
-      : "Edit Folder";
+    ? "Upload Document"
+    : "Edit Folder";
 
   const modelChildProps = isModalOpen.toCreate
     ? CreateContainer
     : isModalOpen.toUpload
-      ? UploadContainer
-      : CreateContainer;
+    ? UploadContainer
+    : EditContainer;
 
   const modelFooterProps = (
     <>
@@ -205,8 +274,8 @@ const FolderOptionsContainer = ({
           isModalOpen.toCreate
             ? () => handleCreateFolder()
             : isModalOpen.toUpload
-              ? () => handleUploadfile()
-              : () => handleEditfolder()
+            ? () => handleUploadfile()
+            : () => handleEditfolder()
         }
         buttonTitle={"Upload"}
         onClose={() => {
@@ -223,8 +292,9 @@ const FolderOptionsContainer = ({
 
   return (
     <div
-      className={`node-options-container ${isOptionsActive && "node-options-isActive"
-        }`}
+      className={`node-options-container ${
+        isOptionsActive && "node-options-isActive"
+      }`}
       onClick={(e) => e.stopPropagation()}
     >
       <Modal

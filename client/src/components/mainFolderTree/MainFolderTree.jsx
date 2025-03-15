@@ -95,6 +95,8 @@ const NodeTree = ({ node, isArrowActive, updateBreadcrumb }) => {
               <OptionsThreeDots />
             </div>
             <FolderOptionsContainer
+            name = {node?.name}
+            description = {node?.description}
               type={node?.type}
               id={node?.id}
               isOptionsActive={isOptionsActive}
