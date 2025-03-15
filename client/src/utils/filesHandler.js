@@ -8,7 +8,7 @@ export async function uploadFile(file, folderId,) {
       formData.append("name", file.name);
       formData.append("description", "---");
   
-      const response = await fetch("/api/files", {
+      const response = await fetch("https://file-management-app-rccj.onrender.com/api/files", {
         method: "POST",
         body: formData,
       });
@@ -27,7 +27,7 @@ export async function uploadFile(file, folderId,) {
 
   export async function deleteFile(id) {
     try {
-      const response = await fetch(`/api/files/${id}`, {
+      const response = await fetch(`https://file-management-app-rccj.onrender.com/api/files/${id}`, {
         method: "DELETE",
       });
   
