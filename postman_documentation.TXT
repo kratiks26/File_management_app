@@ -1,0 +1,245 @@
+### Postman Collection JSON
+
+```json
+{
+  "info": {
+    "_postman_id": "your-collection-id",
+    "name": "File Management System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Folder Endpoints",
+      "item": [
+        {
+          "name": "Create Folder",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Folder\",\n  \"description\": \"This is a new folder\",\n  \"parentFolder\": \"parentFolderId\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/folders",
+              "host": ["{{base_url}}"],
+              "path": ["api", "folders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Edit Folder",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Folder Name\",\n  \"description\": \"Updated description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/folders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "folders", ":id"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Folder",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/folders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "folders", ":id"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Folders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/folders?page=1&limit=8",
+              "host": ["{{base_url}}"],
+              "path": ["api", "folders"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "8"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Count Folders and Files",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/folders/count",
+              "host": ["{{base_url}}"],
+              "path": ["api", "folders", "count"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "File Endpoints",
+      "item": [
+        {
+          "name": "Upload File",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/file"
+                },
+                {
+                  "key": "folder",
+                  "value": "folderId",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "example.pdf",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "This is an example file",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/files",
+              "host": ["{{base_url}}"],
+              "path": ["api", "files"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete File",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/files/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "files", ":id"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    }
+  ]
+}
+```
+
+---
+
+### How to Use This Collection
+
+1. **Import the Collection**:
+   - Open Postman.
+   - Click on the **Import** button.
+   - Select the JSON file or paste the JSON content.
+   - Click **Import**.
+
+2. **Set Environment Variables**:
+   - Create an environment in Postman (e.g., `Local`).
+   - Add a variable `base_url` with the value `http://localhost:5000` (or your server URL).
+
+3. **Test the Endpoints**:
+   - Use the collection to test all the endpoints.
+   - Update the request body, query parameters, or file uploads as needed.
+
+---
+
+### Example Requests and Responses
+
+#### 1. **Create Folder**
+- **Request**:
+  ```json
+  {
+    "name": "New Folder",
+    "description": "This is a new folder",
+    "parentFolder": "parentFolderId"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "_id": "folderId",
+    "name": "New Folder",
+    "description": "This is a new folder",
+    "parentFolder": "parentFolderId",
+    "createdAt": "2023-10-01T12:00:00.000Z",
+    "updatedAt": "2023-10-01T12:00:00.000Z"
+  }
+  ```
+
+#### 2. **Upload File**
+- **Request**:
+  - Form Data:
+    - `file`: (File to upload)
+    - `folder`: `folderId` (optional)
+    - `name`: `example.pdf`
+    - `description`: `This is an example file`
+- **Response**:
+  ```json
+  {
+    "_id": "fileId",
+    "name": "example.pdf",
+    "folder": "folderId",
+    "filePath": "uploads/example.pdf",
+    "publicId": "example.pdf",
+    "description": "This is an example file",
+    "createdAt": "2023-10-01T12:00:00.000Z",
+    "updatedAt": "2023-10-01T12:00:00.000Z"
+  }
+  ```
+
+---
+
+### Next Steps
+
+1. **Import the Collection** into Postman.
+2. **Test the Endpoints** and verify the responses.
+3. **Update the Collection** with any additional endpoints or details.
