@@ -35,6 +35,10 @@ const NodeTree = ({ node, isArrowActive, updateBreadcrumb }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOptionsActive, setIsOptionsActive] = useState(false);
 
+  const toCloseOptions = () =>{
+    setIsOptionsActive(false)
+  }
+
   const formatDateTime = (isoString) => {
     const date = new Date(isoString);
     const day = String(date.getDate()).padStart(2, "0");
@@ -66,8 +70,8 @@ const NodeTree = ({ node, isArrowActive, updateBreadcrumb }) => {
     <>
       {node?.type === "folder" ? (
         <div
-          className="tree-node-base"
-          style={{ marginLeft: node?.type == "folder" ? 20 : 10 }}
+          className={`tree-node-base ${isExpanded && "tree-node-base-open"}`}
+          style={{ marginLeft: node?.type === "folder" ? 20 : 10 }}
         >
           <div
             className={`tree-node ${isExpanded && "tree-node-open"}`}
@@ -101,6 +105,7 @@ const NodeTree = ({ node, isArrowActive, updateBreadcrumb }) => {
               id={node?.id}
               isOptionsActive={isOptionsActive}
               setIsOptionsActive={setIsOptionsActive}
+              onClose = {toCloseOptions}
             />
           </div>
           {isExpanded &&
@@ -118,7 +123,7 @@ const NodeTree = ({ node, isArrowActive, updateBreadcrumb }) => {
       ) : (
         <div
           className="tree-node-base"
-          style={{ marginLeft: node?.type == "folder" ? 20 : 10 }}
+          style={{ marginLeft: node?.type === "folder" ? 20 : 10 }}
         >
           <div
             className={`tree-node ${isExpanded && "tree-node-open"}`}
@@ -141,9 +146,13 @@ const NodeTree = ({ node, isArrowActive, updateBreadcrumb }) => {
               <OptionsThreeDots />
             </div>
             <FolderOptionsContainer
+              name = {node?.name}
+              description = {node?.description}
               type={node?.type}
               id={node?.id}
               isOptionsActive={isOptionsActive}
+              setIsOptionsActive={setIsOptionsActive}
+              onClose = {toCloseOptions}
             />
           </div>
         </div>

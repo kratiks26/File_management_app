@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./FolderOptionsContainer.scss";
 import EditPencil from "../../icons/editPencil";
 import DeleteIcon from "../../icons/deleteIcon";
@@ -23,10 +23,12 @@ const FolderOptionsContainer = ({
   id,
   isOptionsActive,
   setIsOptionsActive,
+  onClose,
 }) => {
   const [actionButtonStatus, setActionButtonStatus] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState({
     toEdit: false,
+    toDelete: false,
     toCreate: false,
     toUpload: false,
   });
@@ -41,17 +43,52 @@ const FolderOptionsContainer = ({
   });
 
   const [toUploadFile, setToUploadFile] = useState(null);
-
-  // console.log("file:", toUploadFile);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadActive, setUploadActive] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const optionContainerRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        optionContainerRef.current &&
+        !optionContainerRef.current.contains(event.target)
+      ) {
+        onClose(); // Call the onClose function from props
+      }
+    };
+
+    if (isOptionsActive) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOptionsActive, onClose]);
+
+  // if (!isOptionsActive) return null;
 
   const handleEditOption = () => {
     setIsModalOpen((prev) => ({
       ...prev,
       toEdit: true,
     }));
-    setIsOptionsActive(false);
+    if (setIsOptionsActive) {
+      setIsOptionsActive(false);
+    }
+  };
+
+  const handleDeleteOption = () => {
+    setIsModalOpen((prev) => ({
+      ...prev,
+      toDelete: true,
+    }));
+    if (setIsOptionsActive) {
+      setIsOptionsActive(false);
+    }
   };
 
   const handleCreateOption = () => {
@@ -59,57 +96,55 @@ const FolderOptionsContainer = ({
       ...prev,
       toCreate: true,
     }));
-    setIsOptionsActive(false);
+    if (setIsOptionsActive) {
+      setIsOptionsActive(false);
+    }
   };
   const handleUploadOption = () => {
     setIsModalOpen((prev) => ({
       ...prev,
       toUpload: true,
     }));
-    setIsOptionsActive(false);
+    if (setIsOptionsActive) {
+      setIsOptionsActive(false);
+    }
   };
 
-  const handleDeleteOption = () => {
-    if (type == "folder") {
+  const handleDeleteFolder = () => {
+    setActionButtonStatus(true);
+    setIsDeleting(true);
+    if (type === "folder") {
+      setActionButtonStatus(false);
       deleteFolder(id)
         .then((data) => {
-          setIsOptionsActive(false);
           const socket = getSocket();
           socket.emit("folderDeleted", id);
+          setIsModalOpen({ toCreate: false, toUpload: false, toEdit: false });
+          setActionButtonStatus(false);
+          setIsDeleting(false);
         })
         .catch((error) => {
-          // alert(error);
+          alert(error);
           console.error(error);
+          setIsDeleting(false);
         });
     } else {
       deleteFile(id)
         .then((data) => {
-          setIsOptionsActive(false);
           const socket = getSocket();
           socket.emit("fileDeleted", id);
+          setIsModalOpen({ toCreate: false, toUpload: false, toEdit: false });
+          setActionButtonStatus(false);
         })
         .catch((error) => {
+          alert(error);
           console.error(error);
         });
     }
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setToCreateFolder((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleUpdateInput = (event) => {
-    const { name, value } = event.target;
-    setToEditFolder((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
   const handleEditfolder = () => {
+    setActionButtonStatus(true);
     editFolder(id, toEditFolder.name, toEditFolder.description)
       .then(() => {
         setIsModalOpen({ toCreate: false, toUpload: false, toEdit: false });
@@ -166,7 +201,22 @@ const FolderOptionsContainer = ({
       });
   };
 
-  console.log("uploadProgress:", uploadProgress);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setToCreateFolder((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdateInput = (event) => {
+    const { name, value } = event.target;
+    setToEditFolder((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const EditContainer = (
     <>
       <div className="create-item">
@@ -194,6 +244,14 @@ const FolderOptionsContainer = ({
     </>
   );
 
+  const DeleteContainer = isDeleting ? (
+    <div className="delete-container">Deleting...</div>
+  ) : (
+    <div className="delete-container">
+      Are you sure you want to delete{" "}
+      <span style={{ color: "red" }}>{name}</span> ?{" "}
+    </div>
+  );
   const CreateContainer = (
     <>
       <div className="create-item">
@@ -222,18 +280,18 @@ const FolderOptionsContainer = ({
   );
 
   const UploadContainer = uploadActive ? (
-    < div className="upload-progress-container">
-       <div className="file-name">
-       <FileColoredOption/>
-       {
-        toUploadFile && <span>{toUploadFile.name}</span>
-       }
-       
+    <div className="upload-progress-container">
+      <div className="file-name">
+        <FileColoredOption />
+        {toUploadFile && <span>{toUploadFile.name}</span>}
       </div>
       <div className="upload-progress">
-          <div className="progress-bar" style={{ width: `${uploadProgress}%` }}></div>
-          </div>
-          <span className="progress-count">{uploadProgress}%  upload completed</span>
+        <div
+          className="progress-bar"
+          style={{ width: `${uploadProgress}%` }}
+        ></div>
+      </div>
+      <span className="progress-count">{uploadProgress}% upload completed</span>
     </div>
   ) : (
     <>
@@ -253,19 +311,25 @@ const FolderOptionsContainer = ({
     ? true
     : isModalOpen.toUpload
     ? true
-    : isModalOpen.toEdit;
+    : isModalOpen.toEdit
+    ? true
+    : isModalOpen.toDelete;
 
   const modelTitleProps = isModalOpen.toCreate
     ? "Create Folder"
     : isModalOpen.toUpload
     ? "Upload Document"
-    : "Edit Folder";
+    : isModalOpen.toEdit
+    ? "Edit Folder"
+    : "Delete";
 
   const modelChildProps = isModalOpen.toCreate
     ? CreateContainer
     : isModalOpen.toUpload
     ? UploadContainer
-    : EditContainer;
+    : isModalOpen.toEdit
+    ? EditContainer
+    : DeleteContainer;
 
   const modelFooterProps = (
     <>
@@ -275,9 +339,19 @@ const FolderOptionsContainer = ({
             ? () => handleCreateFolder()
             : isModalOpen.toUpload
             ? () => handleUploadfile()
-            : () => handleEditfolder()
+            : isModalOpen.toEdit
+            ? () => handleEditfolder()
+            : () => handleDeleteFolder()
         }
-        buttonTitle={"Upload"}
+        buttonTitle={
+          isModalOpen.toCreate
+            ? "Create"
+            : isModalOpen.toEdit
+            ? "Update"
+            : isModalOpen.toUpload
+            ? "Upload"
+            : "Delete"
+        }
         onClose={() => {
           setIsModalOpen(false);
           setToCreateFolder({
@@ -292,6 +366,7 @@ const FolderOptionsContainer = ({
 
   return (
     <div
+      ref={optionContainerRef}
       className={`node-options-container ${
         isOptionsActive && "node-options-isActive"
       }`}
@@ -306,24 +381,33 @@ const FolderOptionsContainer = ({
         children={modelChildProps}
         footer={modelFooterProps}
       />
-      <div className="node-options edit" onClick={handleEditOption}>
-        {" "}
-        <EditPencil /> Edit
-      </div>
+      {type === "folder" && (
+        <div className="node-options edit" onClick={handleEditOption}>
+          {" "}
+          <EditPencil /> Edit
+        </div>
+      )}
       <div className="node-options delete" onClick={handleDeleteOption}>
         {" "}
         <DeleteIcon /> Delete
       </div>
-      <div className="node-options create-folder" onClick={handleCreateOption}>
-        <CreateFolderIcon /> Create Folder
-      </div>
-      <div
-        className="node-options upload-document"
-        onClick={handleUploadOption}
-      >
-        {" "}
-        <UploadFileIcon /> Upload Document
-      </div>
+      {type === "folder" && (
+        <div
+          className="node-options create-folder"
+          onClick={handleCreateOption}
+        >
+          <CreateFolderIcon /> Create Folder
+        </div>
+      )}
+      {type === "folder" && (
+        <div
+          className="node-options upload-document"
+          onClick={handleUploadOption}
+        >
+          {" "}
+          <UploadFileIcon /> Upload Document
+        </div>
+      )}
     </div>
   );
 };

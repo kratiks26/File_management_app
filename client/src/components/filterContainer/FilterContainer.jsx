@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./FilterContainer.scss";
 import CrossIcon from "../../icons/crossIcon";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFolderData } from "../../redux/slice/folderDataSlice";
 import { getFolders } from "../../utils/folderHandler";
 
@@ -11,7 +11,6 @@ const FilterContainer = ({
   setFilterOptions,
   handleFilterButton,
 }) => {
-  const { folderData } = useSelector((state) => state.folderData);
   const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
@@ -49,7 +48,7 @@ const FilterContainer = ({
         <div className="filter-container-title">Filter</div>
         <div className="filter-right-box">
           <div className="clear-button" onClick={handleFilterClear}>
-            Clear
+            Clear filter
           </div>
           <div className="close-button" onClick={handleFilterButton}>
             <CrossIcon />

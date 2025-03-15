@@ -22,7 +22,7 @@ const NodeTree = ({ node }) => {
     <>
       {node?.type === "folder" ? (
         <div
-          className="main-folder"
+          className={`main-folder ${isExpanded && "main-folder-open"}`}
           style={{ marginLeft: node?.type === "folder" ? 20 : 10 }}
         >
           <div

@@ -37,6 +37,13 @@
       cursor: pointer;
     }
   }
+
+  .delete-container{
+    font-weight: 600;
+      font-size: 15px;
+      line-height: 100%;
+      letter-spacing: 0%;
+  }
   .file-upload-button {
     width: 395px;
     height: 129px;
@@ -96,7 +103,7 @@
 }
 .node-options-isActive {
   width: 153px;
-  height: 134px;
+  height: auto;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 

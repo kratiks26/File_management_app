@@ -1,6 +1,8 @@
 .folder-tree {
   .main-folder {
     margin-left: 15px;
+    max-height: 40px;
+    transition: max-height 1.5s ease-in-out;
     .folder-box {
       height: 40px;
       display: flex;
@@ -42,5 +44,8 @@
     .folderBoxOpen {
       background-color: rgba(169, 181, 223, 0.3);
     }
+  }
+  .main-folder-open{
+    max-height: 900px;
   }
 }
