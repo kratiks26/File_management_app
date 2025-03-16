@@ -7,6 +7,7 @@ const initialState = {
     currentPage: "1",
   },
   breadcrumb:[],
+  pageNo : 1,
 };
 
 const folderDataSlice = createSlice({
@@ -19,9 +20,12 @@ const folderDataSlice = createSlice({
     setBreadcrumb : (state, action) =>{
         state.breadcrumb = action.payload;
 
+    },
+    setPageNo : (state, action) =>{
+      state.pageNo = action.payload;
     }
   },
 });
 
-export const { setFolderData, setBreadcrumb } = folderDataSlice.actions;
+export const { setFolderData, setBreadcrumb, setPageNo } = folderDataSlice.actions;
 export default folderDataSlice.reducer;

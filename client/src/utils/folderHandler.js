@@ -64,7 +64,7 @@ export async function deleteFolder(id) {
 }
 
 
-export async function getFolders(page = 1, limit = 8, filters = {}) {
+export async function getFolders(page , limit, filters = {}) {
   try {
     const { name, description, createdAt } = filters;
     const queryParams = new URLSearchParams({

@@ -9,11 +9,12 @@ import { setFolderData } from '../../redux/slice/folderDataSlice';
 import { connectSocket, disconnectSocket, getSocket } from '../../utils/socket';
 
 const Dashboard = () => {
-  const {folderData} = useSelector((state)=> state.folderData);
+  const {pageNo} = useSelector((state)=> state.folderData);
   const dispatch = useDispatch();
 
+
   const fetchFolderData = async ()=>{
-    getFolders(1,8,)
+    getFolders(pageNo, 8)
      .then((data) => {
               dispatch(setFolderData(data));
           })
@@ -49,7 +50,7 @@ const Dashboard = () => {
       disconnectSocket();
     };
     // eslint-disable-next-line 
-  },[])
+  },[pageNo]);
 
   
 

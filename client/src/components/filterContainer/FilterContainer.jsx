@@ -1,7 +1,7 @@
 import React from "react";
 import "./FilterContainer.scss";
 import CrossIcon from "../../icons/crossIcon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFolderData } from "../../redux/slice/folderDataSlice";
 import { getFolders } from "../../utils/folderHandler";
 
@@ -11,6 +11,7 @@ const FilterContainer = ({
   setFilterOptions,
   handleFilterButton,
 }) => {
+const {pageNo} = useSelector((state)=> state.folderData)
   const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
@@ -33,7 +34,7 @@ const FilterContainer = ({
   };
 
   const handleFilterClear = () => {
-    getFolders(1, 8)
+    getFolders(pageNo, 8)
       .then((data) => {
         dispatch(setFolderData(data));
       })
