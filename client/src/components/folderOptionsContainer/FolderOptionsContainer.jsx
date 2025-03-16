@@ -55,7 +55,7 @@ const FolderOptionsContainer = ({
         optionContainerRef.current &&
         !optionContainerRef.current.contains(event.target)
       ) {
-        onClose(); // Call the onClose function from props
+        onClose(); 
       }
     };
 
@@ -63,13 +63,11 @@ const FolderOptionsContainer = ({
       document.addEventListener("mousedown", handleClickOutside);
     }
 
-    // Cleanup the event listener
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOptionsActive, onClose]);
 
-  // if (!isOptionsActive) return null;
 
   const handleEditOption = () => {
     setIsModalOpen((prev) => ({
