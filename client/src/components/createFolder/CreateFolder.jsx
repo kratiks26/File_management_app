@@ -149,6 +149,11 @@ const CreateFolder = ({ isCreateFileCollapsed, setIsCreateFileCollaps }) => {
         isOpen={modelOpenProps}
         onClose={() => {
           setIsModalOpen(false);
+          setToCreateFolder({
+            name: "",
+            description: "",
+          });
+          setToUploadFile(null)
         }}
         title={modelTitleProps}
         children={modelChildProps}

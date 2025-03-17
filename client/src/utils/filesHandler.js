@@ -42,14 +42,14 @@ export function uploadFile(file, folderId, onProgress) {
       if (event.lengthComputable) {
         const percentCompleted = Math.round((event.loaded * 100) / event.total);
         if (onProgress) {
-          onProgress(percentCompleted); // Call the progress callback
+          onProgress(percentCompleted);
         }
       }
     });
 
     xhr.addEventListener("load", () => {
       if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(JSON.parse(xhr.responseText)); // Resolve with the response data
+        resolve(JSON.parse(xhr.responseText));
       } else {
         reject(new Error("Failed to upload file"));
       }

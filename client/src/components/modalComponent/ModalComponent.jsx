@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./ModalComponent.scss";
 
 const Modal = ({ isOpen, onClose, title, children, footer }) => { 

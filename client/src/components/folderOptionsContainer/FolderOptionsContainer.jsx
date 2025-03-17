@@ -357,6 +357,7 @@ const FolderOptionsContainer = ({
             name: "",
             description: "",
           });
+          setToUploadFile(null)
         }}
         actionButtonStatus={actionButtonStatus}
       />
